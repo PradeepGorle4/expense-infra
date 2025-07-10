@@ -9,7 +9,7 @@ terraform {
 
   backend "s3" {
     bucket         = "expense-infra-eks-dev-state-locking"
-    key            = "expense-dev-eks-vpc" # Unique key should be used with in the bucket, this will dump in our bucket only if others have same key and access.
+    key            = "expense-dev-vpc" # Unique key should be used with in the bucket, this will dump in our bucket only if others have same key and access.
     region         = "us-east-1"
     use_lockfile = true
   }
