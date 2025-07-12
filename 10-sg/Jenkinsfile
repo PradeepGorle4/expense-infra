@@ -31,10 +31,10 @@ pipeline {
             }
         } 
         stage('Apply') {
-            input {
-                message "Deploy to production?"
-                ok "Deploy."
-            }
+            // input {
+            //     message "Deploy to production?"
+            //     ok "Deploy."
+            // }
             steps {
                 script{
                     withAWS(region: 'us-east-1', credentials: 'aws-creds') {
@@ -47,46 +47,31 @@ pipeline {
             }
         }
         stage('Parallel Stages') {
+            when {
+                expression { params.ACTION == 'apply' }
+            }
             parallel {
                 stage ('20-bastion') {
                     steps {
-                        script{
-                            sh """
-                                Hello, This is stage 20-bastion
-                                sleep 10
-                            """
-                            }
+                        build job: '20-bastion', parameters: [string(name: 'ACTION', value: 'apply')], propagate: true
                         }
                     }
+
                 stage ('30-rds') {
                     steps {
-                        script{
-                            sh """
-                                Hello, This is stage 30-rds
-                                sleep 10
-                            """
-                            }
+                        build job: '30-rds', parameters: [string(name: 'ACTION', value: 'apply')], propagate: true
                         }
                     }
                     
                 stage ('40-eks') {
                     steps {
-                        script{
-                            sh """
-                                Hello, This is stage 40-eks
-                                sleep 10
-                            """
-                            }
+                        build job: '40-eks', parameters: [string(name: 'ACTION', value: 'apply')], propagate: true
                         }
                     }
+
                 stage ('50-ecr') {
                     steps {
-                        script{
-                            sh """
-                                Hello, This is stage 50-ecr
-                                sleep 10
-                            """
-                            }
+                        build job: '50-ecr', parameters: [string(name: 'ACTION', value: 'apply')], propagate: true
                         }
                     }
                 }
