@@ -22,7 +22,7 @@ pipeline {
                 script{
                     withAWS(region: 'us-east-1', credentials: 'aws-creds') {
                         sh """
-                        cd 10-sg
+                        cd 50-ecr
                         terraform init -reconfigure
                         terraform plan
                         """
@@ -31,55 +31,17 @@ pipeline {
             }
         } 
         stage('Apply') {
-            input {
-                message "Deploy to production?"
-                ok "Deploy."
-            }
             steps {
                 script{
                     withAWS(region: 'us-east-1', credentials: 'aws-creds') {
                         sh """
-                        cd 10-sg
+                        cd 50-ecr
                         terraform apply -auto-approve
                         """
                     }
                 }
             }
         }
-        stage('Parallel Stages') {
-            parallel {
-                stage ('20-bastion')
-                    steps {
-                        script{
-                            sh """
-                            
-                            """
-                            }
-                    }
-                stage ('30-rds')
-                    steps {
-                        script{
-                            sh """
-
-                            """
-                        }
-                    }
-                stage ('40-eks')
-                    steps {
-                        script{
-                            sh """
-
-                            """
-                        }
-                    }
-                stage ('50-ecr')
-                    steps {
-                        script{
-                            sh """
-
-                            """
-                        }
-                    }       
             
     }
         
