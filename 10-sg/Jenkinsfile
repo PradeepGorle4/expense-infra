@@ -48,38 +48,49 @@ pipeline {
         }
         stage('Parallel Stages') {
             parallel {
-                stage ('20-bastion')
+                stage ('20-bastion') {
                     steps {
                         script{
                             sh """
-                            
+                                Hello, This is stage 20-bastion
+                                sleep 10
                             """
                             }
+                        }
                     }
-                stage ('30-rds')
+                stage ('30-rds') {
                     steps {
                         script{
                             sh """
-
+                                Hello, This is stage 30-rds
+                                sleep 10
                             """
+                            }
                         }
                     }
-                stage ('40-eks')
+                    
+                stage ('40-eks') {
                     steps {
                         script{
                             sh """
-
+                                Hello, This is stage 40-eks
+                                sleep 10
                             """
+                            }
                         }
                     }
-                stage ('50-ecr')
+                stage ('50-ecr') {
                     steps {
                         script{
                             sh """
-
+                                Hello, This is stage 50-ecr
+                                sleep 10
                             """
+                            }
                         }
-                    }       
+                    }
+                }
+            }      
             
     }
         
