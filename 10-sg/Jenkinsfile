@@ -84,9 +84,9 @@ pipeline {
                     }
                 }
             }
-            stage('70-ingress-alb') {
+                stage('70-ingress-alb') {
                     steps{
-                       build job: '70-ingress-alb', parameters: [string(name: 'ACTION', value: 'apply')], wait: false 
+                        build job: '70-ingress-alb', parameters: [string(name: 'ACTION', value: 'apply')], wait: false 
                     }
                 }
         }     
