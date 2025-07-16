@@ -22,9 +22,9 @@ pipeline {
                 script{
                     withAWS(region: 'us-east-1', credentials: 'aws-creds') {
                         sh """
-                        cd 50-ecr
-                        terraform init -reconfigure
-                        terraform plan
+                            cd 50-ecr
+                            terraform init -reconfigure
+                            terraform plan
                         """
                     }
                 }
@@ -35,8 +35,8 @@ pipeline {
                 script{
                     withAWS(region: 'us-east-1', credentials: 'aws-creds') {
                         sh """
-                        cd 50-ecr
-                        terraform apply -auto-approve
+                            cd 50-ecr
+                            terraform apply -auto-approve
                         """
                     }
                 }
